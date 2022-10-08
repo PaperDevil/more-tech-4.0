@@ -12,9 +12,14 @@ services:
       - MONGO_INITDB_ROOT_USERNAME=mongosir
       - MONGO_INITDB_ROOT_PASSWORD=mongopass
 
-  selenium:
-    image: selenium/standalone-chrome
+  gateway:
+    build: webgateway
+    restart: always
+    command: python manage.py migrate & python manage.py runserver
     ports:
-      - 8888:4444
-    volumes:
-      - /dev/shm:/dev/shm
+      - 8000:8000
+
+  faust:
+    build: faust_app
+    restart: always
+    command: python manage.py worker
