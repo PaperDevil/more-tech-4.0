@@ -66,7 +66,7 @@ def get_trends(request, days: int):
 
 
 @news_router.get('/trend/{str:trend}', response=list[NewsResponse])
-def get_trendet_news(request):
+def get_trendet_news(request, trend: str):
     """
     Получение списка новостей по какому-то тренду
 
