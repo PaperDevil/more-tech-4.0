@@ -11,3 +11,10 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=mongosir
       - MONGO_INITDB_ROOT_PASSWORD=mongopass
+
+  selenium:
+    image: selenium/standalone-chrome
+    ports:
+      - 4444:4444
+    volumes:
+      - /dev/shm:/dev/shm
