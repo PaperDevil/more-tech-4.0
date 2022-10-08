@@ -25,7 +25,11 @@ def get_hot_news(request, limit: int, offset: int):
     for item in data.feature_store.posts.find({}).skip(offset).limit(limit):
         result.append(NewsResponse(
             title=item['title'],
-            content=item['text']
+            content=item['content'],
+            tags=item['tags'],
+            source=item['source'],
+            date=item['date'],
+            is_trusted=item['is_trusted']
         ))
     return result
 
