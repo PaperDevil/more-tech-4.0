@@ -30,7 +30,8 @@ class BUHParser:
                     result.append({
                         'title': title,
                         'content': content,
-                        'short': short
+                        'short': short,
+                        'tags': ['accounting', 'finance']
                     })
                 time.sleep(3)
             else:
