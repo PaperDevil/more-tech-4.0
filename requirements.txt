@@ -1,0 +1,13 @@
+asgiref==3.5.2
+cmake==3.24.1.1
+Django==4.1.1
+gensim==4.2.0
+numpy==1.23.3
+packaging==21.3
+Pillow==9.2.0
+psycopg2==2.9.3
+psycopg2-binary==2.9.3
+pyparsing==3.0.9
+scipy==1.9.1
+smart-open==6.1.0
+sqlparse==0.4.2
