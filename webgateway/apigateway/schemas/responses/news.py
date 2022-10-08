@@ -7,7 +7,7 @@ class NewsResponse(Schema):
     title: typing.Optional[str]
     content: typing.Optional[str]
     short: typing.Optional[str]
-    tags: typing.List[str]
+    tags: typing.Any
     source: typing.Optional[str]
     date: typing.Optional[str]
     is_trusted: typing.Optional[str]

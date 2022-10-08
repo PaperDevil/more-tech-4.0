@@ -5,8 +5,8 @@ from faust import Record
 
 class PostRecord(Record):
     title: Optional[str] = None
-    text: Optional[str] = None
+    content: Optional[str] = None
     is_trusted: Optional[bool] = None
     tags: List[str] = []
     source: Optional[str] = None
-    data: Optional[str] = None
+    date: Optional[str] = None
