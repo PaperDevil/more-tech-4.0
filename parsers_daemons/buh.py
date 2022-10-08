@@ -15,6 +15,8 @@ class BUHParser:
     #  парсинг сайта ведомостей
     def buh_ru(self, pages: int) -> list:
         result = []
+        producer = KafkaProducer(bootstrap_servers=[KAFKA_URL],
+                                 value_serializer=lambda v: json.dumps(v).encode('utf-8'))
         for i in range(0, pages):
             page = requests.get(
                 f'https://buh.ru/news/uchet_nalogi/?PAGEN_1={i}')
@@ -23,16 +25,23 @@ class BUHParser:
                 text_data = soup.find_all('article',
                                           class_='article')
                 for article in text_data:
-                    title = article.find('a').text
-                    href = article.find('a').get('href')
-                    short = article.find_all('p')[1].text
-                    content = self.get_buh_content(f'https://buh.ru{href}')
-                    result.append({
-                        'title': title,
-                        'content': content,
-                        'short': short,
-                        'tags': ['accounting', 'finance']
-                    })
+                    try:
+                        title = article.find('a').text
+                        href = article.find('a').get('href')
+                        short = article.find_all('p')[1].text
+                        content = self.get_buh_content(f'https://buh.ru{href}')
+                        result = {
+                            'title': title,
+                            'content': content,
+                            'short': short,
+                            'tags': ['accounting', 'finance'],
+                            'source': 'buh.ru'
+                        }
+                        print(result)
+                        future = producer.send('posts', result)
+                        result = future.get(timeout=60)
+                    except Exception:
+                        continue
                 time.sleep(3)
             else:
                 print('pizda')
@@ -50,12 +59,7 @@ class BUHParser:
 
 def main():
     parser = BUHParser()
-    data_list = parser.buh_ru(2)
-    producer = KafkaProducer(bootstrap_servers=[KAFKA_URL], value_serializer=lambda v: json.dumps(v).encode('utf-8'))
-    for i in data_list:
-        print(i)
-        future = producer.send('posts', i)
-        result = future.get(timeout=60)
+    data_list = parser.buh_ru(2680)
 
 if __name__ == '__main__':
     main()
