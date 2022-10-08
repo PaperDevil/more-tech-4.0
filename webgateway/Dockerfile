@@ -1,4 +1,4 @@
-FROM python:3.8-slim as builder
+FROM python:3.10-slim as builder
 
 WORKDIR /telemed
 
@@ -16,7 +16,7 @@ COPY requirements.txt .
 RUN --mount=type=cache,target=/root/.cache/pip \
     pip install -r requirements.txt
 
-FROM python:3.8-slim
+FROM python:3.10-slim
 
 COPY --from=builder /opt/venv /opt/venv
 
