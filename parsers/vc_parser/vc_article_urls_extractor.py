@@ -9,8 +9,8 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 from selenium.webdriver.common.action_chains import ActionChains
 
-from parsers.vc_parser import VcConfig
-from parsers.vc_parser.VcConfig import ARTICLE_COUNT_TO_PARSE, HUMAN_BEHAVIOR_IMITATION_ENABLED
+from parsers.vc_parser import vc_config
+from parsers.vc_parser.vc_config import ARTICLE_COUNT_TO_PARSE, HUMAN_BEHAVIOR_IMITATION_ENABLED, BASE_URL
 
 
 class VcArticleUrlsExtractor:
@@ -20,7 +20,7 @@ class VcArticleUrlsExtractor:
 
     def __parse_tag(self, tag: str):
         browser = webdriver.Chrome(ChromeDriverManager().install())
-        browser.get(VcConfig.BASE_URL + tag)
+        browser.get(BASE_URL + tag)
 
         articles_set = set()
         while len(articles_set) < ARTICLE_COUNT_TO_PARSE:

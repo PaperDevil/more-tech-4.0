@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import datetime
 
-from parsers.vc_parser.VcArticleContent import VcArticleContent
+from parsers.vc_parser.vc_article_content import VcArticleContent
 
 
 class VcArticleParser:

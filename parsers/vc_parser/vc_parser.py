@@ -1,11 +1,11 @@
 from typing import List
 
-from parsers.Article import Article
-from parsers.ArticleDataSource import ArticleDataSource
-from parsers.vc_parser import VcConfig
-from parsers.vc_parser.VcArticleContent import VcArticleContent
-from parsers.vc_parser.VcArticleParser import VcArticleParser
-from parsers.vc_parser.VcArticleUrlsExtractor import VcArticleUrlsExtractor
+from parsers.article import Article
+from parsers.article_data_source import ArticleDataSource
+from parsers.vc_parser import vc_config
+from parsers.vc_parser.vc_article_content import VcArticleContent
+from parsers.vc_parser.vc_article_parser import VcArticleParser
+from parsers.vc_parser.vc_article_urls_extractor import VcArticleUrlsExtractor
 
 
 class VcParser(ArticleDataSource):
@@ -13,7 +13,7 @@ class VcParser(ArticleDataSource):
     def get_data(self) -> List[Article]:
         vc_article_urls_extractor = VcArticleUrlsExtractor()
         articles = []
-        for tag in VcConfig.TAG_LIST:
+        for tag in vc_config.TAG_LIST:
             article_urls = vc_article_urls_extractor.extract_urls(tag)
             for article_url in article_urls:
                 try:
