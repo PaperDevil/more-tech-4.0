@@ -1,11 +1,10 @@
 import json
 import os
 
-
 from kafka import KafkaProducer
 
-from article import Article
-from vc_parser.vc_parser import VcParser
+from parsers.article import Article
+from parsers.vc_parser.vc_parser import VcParser
 
 KAFKA_URL = os.getenv('KAFKA_URL', '127.0.0.1:9093')
 producer = KafkaProducer(bootstrap_servers=[KAFKA_URL],
