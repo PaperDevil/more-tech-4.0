@@ -68,9 +68,11 @@ class VcArticleUrlsExtractor:
 
     def __scroll_to_bottom(self, browser):
         last_feed_chunk = browser.find_elements(By.CLASS_NAME, "feed__chunk")[-1]
-        ActionChains(browser).scroll_to_element(last_feed_chunk).perform()
-        if self.successfully_parsed_article_count > 100:
-            sleep(1)
+        ActionChains(browser) \
+            .scroll_to_element(last_feed_chunk) \
+            .pause(0.1) \
+            .scroll_by_amount(delta_x=0, delta_y=1000) \
+            .perform()
 
     def __sleep_if_need(self):
         if HUMAN_BEHAVIOR_IMITATION_ENABLED:
