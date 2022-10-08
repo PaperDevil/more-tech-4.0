@@ -1,11 +1,11 @@
-from typing import List
+from typing import List, Optional
 
 from faust import Record
 
 
 class PostRecord(Record):
-    title: str
-    text: str
-    is_trusted: bool
-    tags: List[str]
-    source: str
+    title: Optional[str] = None
+    text: Optional[str] = None
+    is_trusted: Optional[bool] = None
+    tags: List[str] = []
+    source: Optional[str] = None

@@ -14,10 +14,11 @@ class FaustApp:
 
     def __init__(self, kafka_url: str, mongo_url: str):
         self.app = App(
-            'preprocessor',
+            'processor',
             version=1,
             broker=kafka_url,
             value_serializer='json',
+            auto_offset_reset="earliest"
         )
         self.mongo = MongoDB(mongo_url)
 
@@ -28,18 +29,8 @@ class FaustApp:
         async def consume_posts(stream: Stream):
             async for event in stream.events():
                 post: PostRecord = event.value
-                preprocessed_post = preprocess_post(
-                    post_id=event.key,
-                    group_id=post.group_id,
-                    location=post.location,
-                    post_type=post.post_type,
-                    text=post.text,
-                    image_link=post.image_link,
-                    explicit=post.explicit,
-                    tags=post.tags
-                )
+                preprocessed_post = preprocess_post(post)
                 await self.mongo.save_post(preprocessed_post)
-                # send post id to topic
                 yield event.key
 
         self.app.main()

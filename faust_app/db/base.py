@@ -21,5 +21,6 @@ class MongoDB:
 
         self._interactions = self._db.interactions
 
-    def save_post(self, post):
-        return post
+    def save_post(self, post: dict):
+        id = self._posts.insert_one(post)
+        return id

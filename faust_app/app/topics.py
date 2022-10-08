@@ -12,4 +12,4 @@ class Topic:
 
 
 def get_post_topic(app: App) -> TopicT:
-    return Topic(app, 'Posts', value_type=PostRecord).topic
+    return Topic(app, 'posts', value_type=PostRecord).topic
