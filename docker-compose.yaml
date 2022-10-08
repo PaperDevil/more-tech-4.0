@@ -15,7 +15,7 @@ services:
   gateway:
     build: webgateway
     restart: always
-    command: python manage.py migrate & python manage.py runserver
+    command: python manage.py runserver
     ports:
       - 8000:8000
 
