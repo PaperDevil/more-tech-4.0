@@ -1,5 +1,6 @@
 import json
 import os
+from datetime import datetime
 
 from bs4 import BeautifulSoup
 import requests
@@ -24,6 +25,8 @@ class BUHParser:
                 soup = BeautifulSoup(page.text, 'html.parser')
                 text_data = soup.find_all('article',
                                           class_='article')
+
+                page_date = self.__extract_date_for_page(text_data)
                 for article in text_data:
                     try:
                         title = article.find('a').text
@@ -35,7 +38,8 @@ class BUHParser:
                             'content': content,
                             'short': short,
                             'tags': ['accounting', 'finance'],
-                            'source': 'buh.ru'
+                            'source': 'buh.ru',
+                            'date': page_date
                         }
                         print(result)
                         future = producer.send('posts', result)
@@ -56,10 +60,21 @@ class BUHParser:
             content += i.text
         return content
 
+    def __extract_date_for_page(self, text_data) -> str:
+        href = text_data[0].find('a').get('href')
+        article_url = f'https://buh.ru{href}'
+        page = requests.get(article_url)
+        soup = BeautifulSoup(page.text, 'html.parser')
+        date_str = soup.find_all("span", class_="grayd")[0].text
+        time = datetime.strptime(date_str, "%d.%m.%Y")
+        date = time.strftime("%Y/%m/%d")
+        return date
+
 
 def main():
     parser = BUHParser()
     data_list = parser.buh_ru(2680)
+
 
 if __name__ == '__main__':
     main()
