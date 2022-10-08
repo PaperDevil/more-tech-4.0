@@ -10,7 +10,7 @@ news_router = Router()
 
 
 @news_router.get('/all', response=list[NewsResponse])
-def get_hot_news(request, page: PageSchema, categories: CategoriesSchema):
+def get_hot_news(request, limit: int, offset: int):
     """
     Метод для получения полного списка новостей.
 
@@ -22,7 +22,7 @@ def get_hot_news(request, page: PageSchema, categories: CategoriesSchema):
     """
     data = get_post_collection()
     result = []
-    for item in data.posts.find({}).skip(page.offset).limit(page.limit):
+    for item in data.feature_store.posts.find({}).skip(offset).limit(limit):
         result.append(NewsResponse(
             title=item['title']
         ))
