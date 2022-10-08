@@ -9,3 +9,4 @@ class PostRecord(Record):
     is_trusted: Optional[bool] = None
     tags: List[str] = []
     source: Optional[str] = None
+    data: Optional[str] = None

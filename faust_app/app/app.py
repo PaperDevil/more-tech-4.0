@@ -30,7 +30,14 @@ class FaustApp:
             async for event in stream.events():
                 post: PostRecord = event.value
                 preprocessed_post = preprocess_post(post)
-                await self.mongo.save_post(preprocessed_post)
+                await self.mongo.save_post({
+                            'title': preprocessed_post.title,
+                            'content': preprocessed_post.text,
+                            'is_trusted': preprocessed_post.is_trusted,
+                            'tags': preprocessed_post.tags,
+                            'source': preprocessed_post.source,
+                            'date': preprocessed_post.data
+                        })
                 yield event.key
 
         self.app.main()
