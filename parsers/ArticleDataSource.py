@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import List
 
-from Article import Article
+from parsers.Article import Article
 
 
 class ArticleDataSource(ABC):

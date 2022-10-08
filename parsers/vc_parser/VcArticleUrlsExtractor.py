@@ -9,8 +9,8 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 from selenium.webdriver.common.action_chains import ActionChains
 
-from vc_parser import VcConfig
-from vc_parser.VcConfig import HUMAN_BEHAVIOR_IMITATION_ENABLED, ARTICLE_COUNT_TO_PARSE
+from parsers.vc_parser import VcConfig
+from parsers.vc_parser.VcConfig import ARTICLE_COUNT_TO_PARSE, HUMAN_BEHAVIOR_IMITATION_ENABLED
 
 
 class VcArticleUrlsExtractor:

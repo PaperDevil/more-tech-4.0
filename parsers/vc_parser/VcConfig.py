@@ -1,4 +1,4 @@
 BASE_URL = "https://vc.ru/"
-TAG_LIST = ["finance", "marketing", "hr"]
-ARTICLE_COUNT_TO_PARSE = 15
+TAG_LIST = ["finance"]
+ARTICLE_COUNT_TO_PARSE = 20
 HUMAN_BEHAVIOR_IMITATION_ENABLED = False
