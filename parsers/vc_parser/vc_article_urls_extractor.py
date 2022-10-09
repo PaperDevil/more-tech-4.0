@@ -16,7 +16,11 @@ import pickle
 
 class VcArticleUrlsExtractor:
 
+    def __init__(self):
+        self.successfully_parsed_article_count = 0
+
     def start_extracting_urls(self, article_parser_callback: ArticleParserCallback):
+        self.successfully_parsed_article_count = 0
         browser_map: dict[ChromeDriverManager] = self.__init_browsers()
 
         article_urls_set = self.__load_processed_urls()
@@ -32,6 +36,7 @@ class VcArticleUrlsExtractor:
                 if not url in article_urls_set:
                     article_urls_set.add(url)
                     article_parser_callback.parse_article(url, processing_tag)
+                    self.successfully_parsed_article_count += 1
 
             self.__scroll_to_bottom(browser_map[processing_tag])
             if i == len(vc_config.TAG_LIST) - 1:
@@ -63,7 +68,11 @@ class VcArticleUrlsExtractor:
 
     def __scroll_to_bottom(self, browser):
         last_feed_chunk = browser.find_elements(By.CLASS_NAME, "feed__chunk")[-1]
-        ActionChains(browser).move_to_element(last_feed_chunk).perform()
+        ActionChains(browser) \
+            .scroll_to_element(last_feed_chunk) \
+            .pause(0.1) \
+            .scroll_by_amount(delta_x=0, delta_y=1000) \
+            .perform()
 
     def __sleep_if_need(self):
         if HUMAN_BEHAVIOR_IMITATION_ENABLED:
