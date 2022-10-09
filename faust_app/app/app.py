@@ -32,11 +32,11 @@ class FaustApp:
                 preprocessed_post = preprocess_post(post)
                 await self.mongo.save_post({
                             'title': preprocessed_post.title,
-                            'content': preprocessed_post.text,
+                            'content': preprocessed_post.content,
                             'is_trusted': preprocessed_post.is_trusted,
                             'tags': preprocessed_post.tags,
                             'source': preprocessed_post.source,
-                            'date': preprocessed_post.data
+                            'date': preprocessed_post.date
                         })
                 yield event.key
 
