@@ -2,8 +2,6 @@ from ninja import Router
 
 from apigateway.mongodb import get_post_collection
 from apigateway.schemas.responses.news import NewsResponse
-from apigateway.schemas.requests.pagination import PageSchema
-from apigateway.schemas.requests.categories import CategoriesSchema
 
 
 news_router = Router()
